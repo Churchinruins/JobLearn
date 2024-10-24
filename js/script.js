@@ -1,34 +1,50 @@
 'use strict';
 
 let title = prompt('Как называется ваш проект?');
-console.log(title);
-let screens = prompt('Какие типы экранов нужно разработать?', 'Простые, Сложные, Интерактивные');
-console.log(screens);
-console.log(screens.toLowerCase().split(', '));
-let screenPrice = prompt('Сколько будет стоить данная работа?', 7000);
-console.log(screenPrice);
-let rollback = 40;
-console.log(rollback);
+let screens = prompt('Какие типы экранов нужно разработать?',);
+let screenPrice = +prompt('Сколько будет стоить данная работа?',);
+let rollback = 10;
 let adaptive = confirm('Нужен ли адаптив на сайте?');
-console.log(adaptive);
 let service1 = prompt('Какой дополнительный тип услуги нужен?');
-console.log(service1);
-let servicePrice1 = prompt('Сколько это будет стоить?', 2000);
-console.log(servicePrice1);
+let servicePrice1 = +prompt('Сколько это будет стоить?',);
 let service2 = prompt('Какой дополнительный тип услуги нужен?');
-console.log(service2);
-let servicePrice2 = prompt('Сколько это будет стоить?', 4000);
-console.log(servicePrice2);
-let fullPrice = Number(screenPrice) + Number(servicePrice1) + Number(servicePrice2);
-let rebateService = 2000;
-let servicePercentPrice = Math.ceil(fullPrice - rebateService)
-console.log(servicePercentPrice)
-if (fullPrice > 30000) {
-    console.log('Даем скидку в 10%')
-} else if (fullPrice > 15000 && fullPrice < 30000) {
-    console.log("Даем скидку в 5%");
-} else if (fullPrice <= 15000 && fullPrice > 0) {
-    console.log("Скидка не предусмотрена");
-} else {
-    console.log("Что то пошло не так");
+let servicePrice2 = +prompt('Сколько это будет стоить?',);
+const allServicePrices = getAllServicesPrices();
+const fullPrice = getFullPrice(screenPrice, allServicePrices);
+let servicePercentPrice = fullPrice - (fullPrice * (rollback / 100));
+
+
+const getRollbackMessage = function (price) {
+    if (price >= 30000) {
+        return "Даем скидку в 10%"
+    } else if (fullPrice > 15000 && fullPrice < 30000) {
+        return "Даем скидку в 5%"
+    } else if (fullPrice <= 15000 && fullPrice > 0) {
+        return "Скидка не предусмотрена"
+    } else {
+        return "Что то пошло не так"
+    }
 }
+function getAllServicesPrices() {
+    return servicePrice1 + servicePrice2
+}
+function getFullPrice(screenPrice, allServicePrices) {
+    return screenPrice + allServicePrices;
+}
+function getTitle() {
+    if (title.length === 0) return title;
+    return title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+}
+function getServicePercentPrices(fullPrice, rollback) {
+    return fullPrice - rollback
+}
+
+
+console.log(getTitle());
+console.log(getRollbackMessage(fullPrice));
+console.log(typeof screenPrice);
+console.log(typeof adaptive);
+console.log(screens);
+console.log(servicePercentPrice);
+
+console.log(" Стоимость верстки экранов " + screenPrice + " рублей/юаней/долларов ")
