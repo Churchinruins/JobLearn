@@ -11,7 +11,7 @@ let service2 = prompt('Какой дополнительный тип услуг
 let servicePrice2 = +prompt('Сколько это будет стоить?',);
 const allServicePrices = getAllServicesPrices();
 const fullPrice = getFullPrice(screenPrice, allServicePrices);
-let servicePercentPrice = fullPrice - (fullPrice * (rollback / 100));
+let servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
 
 
 const getRollbackMessage = function (price) {
@@ -36,7 +36,7 @@ function getTitle() {
     return title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
 }
 function getServicePercentPrices(fullPrice, rollback) {
-    return fullPrice - rollback
+    return fullPrice - (fullPrice * (rollback / 100))
 }
 
 
